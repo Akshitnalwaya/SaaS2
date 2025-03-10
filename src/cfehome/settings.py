@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+# import os
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -19,10 +20,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-fg)#tp4kt77h(lci=3i$ssd2^vr(3sh5lau=x#1#(svfzf!9v&"
-
+SECRET_KEY = config("DJANGO_SECRET_KEY") 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = os.environ.get("DEBUG") or True
+# print(f"DEBUG: {DEBUG}")
+
+DEBUG = config("DJANGO_DEBUG",cast = bool)
+print(DEBUG,type(DEBUG))
+
+#int this we have pased a default value of True to the config function
+#so if the value is not found in the .env file then it will take the default value
+#and the default value is True so the value of DEBUG will
+#be True if the value is not found in
+#the .env file
+
+#the main use of debug is to show the error in the browser
+#so if the value of debug is True then it will show the error in the browser
+#and if the value of debug is False then it will not show the error in the browser
+#this help the devloper to see the error in the browser and fix it
 
 ALLOWED_HOSTS = [
     ".railway.app" # https://saas.prod.railway.app
